@@ -776,8 +776,7 @@ p {
 /* line 55, ../sass/circle/core/type.sass */
 em {
   color: #222;
-  font-weight: bold;
-  font-style: normal;
+  font-weight: 100;
 }
 
 /* line 63, ../sass/circle/core/type.sass */
@@ -1001,7 +1000,7 @@ textarea:focus {
 }
 
 /* line 24, ../sass/circle/core/forms.sass */
-input[type="email"], input[type="number"], input[type="search"], input[type="text"], select, input[type="tel"], input[type="url"], input[type="password"] {
+input[type="date"], input[type="email"], input[type="number"], input[type="search"], input[type="text"], select, input[type="tel"], input[type="url"], input[type="password"] {
   background: #fff;
   width: 100%;
   color: #666;
@@ -2059,7 +2058,7 @@ input[type="email"].circle--input--h6, input[type="number"].circle--input--h6, i
   display: block;
   content: "";
   width: 100%;
-  padding-top: 100%;
+  padding-top: 1%;
 }
 /* line 78, ../sass/circle/core/mixins.sass */
 .circle--primary--avatar > .placeholder {

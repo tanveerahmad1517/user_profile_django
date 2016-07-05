@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Sign Up | {{ super }}{% endblock %}
+{% block title %}Sign Up | {{ block.super }}{% endblock %}
 
 {% block body %}
 <form method="POST" action="{% url 'accounts:sign_up' %}">
@@ -8,4 +8,22 @@
     {{ form.as_p }}
     <input type="submit" class="button-primary" value="Sign Up">
 </form>
+{% endblock %}
+
+
+{% block javascript %}
+{% load static from staticfiles %}
+<script type="text/javascript" src="{% static 'strength/strength.js' %}"></script>
+<script type="text/javascript" src="{% static 'strength/js.js' %}"></script>
+<script>
+$(document).ready(function ($) {
+    $("#id_password1").strength({
+        strengthClass: 'strength',
+        strengthMeterClass: 'strength_meter',
+        strengthButtonClass: 'button_strength',
+        strengthButtonText: 'Show password',
+        strengthButtonTextToggle: 'Hide Password'
+    });
+});
+</script>
 {% endblock %}

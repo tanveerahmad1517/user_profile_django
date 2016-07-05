@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Profile | {{ block.super }}{% endblock %}
+
+{% block body %}
+    <div class="grid-25">
+        <p><a href="{% url 'accounts:change_password' %}">Change Password</a></p>
+        <p><a href="{% url 'accounts:edit_avatar' %}">Edit Avatar</a> </p>
+    </div>
+    <div class="grid-75">
+        <h1>Edit Profile</h1>
+        <form enctype="multipart/form-data" method="POST" action="">
+            {% csrf_token %}
+            {% if user.profile.avatar %}
+                <div class="circle--primary--avatar">
+                    <img src="{{ user.profile.avatar.url }}">
+                </div>
+            {% endif %}
+            {{ form.as_p }}
+            {{ formset.management_form }}
+            <!--{{ formset.as_p }}-->
+            {% for profile_form in formset %}
+                {% for field in profile_form %}
+                    {% if field.is_hidden %}
+                        {{ field }}
+                    {% else %}
+                        {{ field.errors }}
+                        {% if field.name == "avatar" %}
+                            {% if field.value %}
+                                <img src="{{ field.value.url }}"><br>
+                                <input id="avatar-clear_id" name="profile-0-avatar-clear" type="checkbox">
+                                <label for="avatar-clear_id">Clear</label>
+                            {% endif %}
+                            <br>New Avatar: <input id="id_avatar" name="profile-0-avatar" type="file">
+                        {% elif field.name == "bio" %}
+                            {{ field.label_tag }}
+                            <textarea name="profile-0-bio">{{ field.value }}</textarea>
+                            <!--<textarea id="markItUp" name="profile-0-bio">{{ field.value }}</textarea>-->
+                        {% else %}
+                            {{ field.label_tag }}
+                            {{ field }}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            <input type="submit" class="button-primary" value="Save">
+        </form>
+    </div>
+{% endblock %}
+
+{% block css %}
+    {% load static from staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'markitup/skins/simple/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'markitup/sets/default/style.css' %}" />
+{% endblock %}
+
+{% block javascript %}
+    {% load static from staticfiles %}
+    <!--<script type="text/javascript" src="{% static 'markitup/jquery.markitup.js' %}"></script>-->
+    <!--&lt;!&ndash;<script type="text/javascript" src="{% static 'markitup/sets/default/set.js' %}"></script>&ndash;&gt;-->
+    <!--<script type="text/javascript">-->
+        <!--var mySettings = {-->
+            <!--onShiftEnter:  	{keepDefault:false, replaceWith:'<br />\n'},-->
+            <!--onCtrlEnter:  	{keepDefault:false, openWith:'\n<p>', closeWith:'</p>'},-->
+            <!--onTab:    		{keepDefault:false, replaceWith:'    '},-->
+            <!--markupSet:  [-->
+                <!--{name:'Bold', key:'B', openWith:'(!(<strong>|!|<b>)!)', closeWith:'(!(</strong>|!|</b>)!)' },-->
+                <!--{name:'Italic', key:'I', openWith:'(!(<em>|!|<i>)!)', closeWith:'(!(</em>|!|</i>)!)'  },-->
+                <!--{name:'Stroke through', key:'S', openWith:'<del>', closeWith:'</del>' },-->
+                <!--{separator:'-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' },-->
+                <!--{name:'Bulleted List', openWith:'    <li>', closeWith:'</li>', multiline:true, openBlockWith:'<ul>\n', closeBlockWith:'\n</ul>'},-->
+                <!--{name:'Numeric List', openWith:'    <li>', closeWith:'</li>', multiline:true, openBlockWith:'<ol>\n', closeBlockWith:'\n</ol>'},-->
+                <!--{separator:'-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' },-->
+                <!--{name:'Link', key:'L', openWith:'<a href="[![Link:!:http://]!]"(!( title="[![Title]!]")!)>', closeWith:'</a>', placeHolder:'Your text to link...' },-->
+                <!--{separator:'-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' },-->
+                <!--{name:'Clean', className:'clean', replaceWith:function(markitup) { return markitup.selection.replace(/<(.*?)>/g, "") } },-->
+                <!--{name:'Preview', className:'preview',  call:'preview'}-->
+            <!--]-->
+        <!--}-->
+    <!--</script>-->
+    <!--<script type="text/javascript">-->
+        <!--$(document).ready(function() {-->
+        <!--$("#markItUp").markItUp(mySettings);-->
+        <!--});-->
+    <!--</script>-->
+
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
+{% endblock %}

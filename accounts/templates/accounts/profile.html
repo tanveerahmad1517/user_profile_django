@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% load account_extras %}
+{% load static from staticfiles %}
+
+{% block title %}User Profile | {{ block.super }}{% endblock %}
+
+{% block body %}
+    <div class="grid-25">
+        nav here maybe?
+    </div>
+    <div class="grid-75">
+        <h1>User Profile</h1>
+            {% if user.profile.avatar %}
+                <div class="circle--primary--avatar">
+                    <img src="{{ user.profile.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
+                </div>
+            {% endif %}
+            <table class="circle--table">
+            <tr><td>First Name</td><td>{{ user.first_name }}</td></tr>
+            <tr><td>Last Name</td><td>{{ user.last_name }}</td></tr>
+            <tr><td>Email</td><td>{{ user.email }}</td></tr>
+            <tr><td>Date of Birth</td><td>{{ user.profile.date_of_birth }}</td></tr>
+            <tr><td>Bio</td><td>{{ user.profile.bio|safe|linebreaks }}</td></tr>
+            </table>
+    </div>
+{% endblock %}
+
