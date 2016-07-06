@@ -4,40 +4,54 @@
 
 {% block body %}
     <div class="grid-25">
-        {% if user.profile.avatar %}
-            <form action="{% url 'accounts:edit_avatar_crop' %}" method="GET">
-                <input type="hidden" size="4" id="x1" name="x1" />
-                <input type="hidden" size="4" id="y1" name="y1" />
-                <input type="hidden" size="4" id="x2" name="x2" />
-                <input type="hidden" size="4" id="y2" name="y2" />
-
-                <input type="submit" class="button" value="Crop">
-            </form>
-            <form action="{% url 'accounts:edit_avatar_rotate' %}" method="GET">
-                <button class="button">Rotate -></button>
-            </form>
-            <form action="{% url 'accounts:edit_avatar_flip' %}" method="GET">
-                <button class="button">Flip</button>
-            </form>
-        {% endif %}
+        nav here
     </div>
 
     <div class="grid-75">
         <h1>Edit Avatar</h1>
-
+        {% if user.profile.avatar %}
             <div class="circle--primary--avatar">
                 <img src="{{ user.profile.avatar.url }}" id="target">
             </div>
+        {% endif %}
+
+        {% if user.profile.avatar %}
+            <div id="editor-outer">
+                <div class="editor-inner">
+                <form action="{% url 'accounts:edit_avatar_crop' %}" method="GET">
+                    <input type="hidden" size="4" id="x1" name="x1" />
+                    <input type="hidden" size="4" id="y1" name="y1" />
+                    <input type="hidden" size="4" id="x2" name="x2" />
+                    <input type="hidden" size="4" id="y2" name="y2" />
+
+                    <div class="editor-inner"><input type="submit" class="button" value="Crop"></div>
+                </form>
+                </div>
+                <div class="editor-inner">
+                <form action="{% url 'accounts:edit_avatar_rotate' %}" method="GET">
+                    <button class="button">Rotate</button>
+                </form>
+                </div>
+                <div class="editor-inner">
+                <form action="{% url 'accounts:edit_avatar_flip' %}" method="GET">
+                    <div class="editor-inner"><button class="button">Flip</button></div>
+                </form>
+                </div>
+            </div>
+        {% endif %}
 
         <form enctype="multipart/form-data" method="POST" action="">
             {% csrf_token %}
-            <p>
-                <input id="avatar-clear_id" name="avatar-clear" type="checkbox" />
-                <label for="avatar-clear_id">Clear</label>
-                <br />Change: <input id="id_avatar" name="avatar" type="file" />
-            </p>
-            <input type="submit" class="button-primary" value="Save file">
+            <br>
+            New file: <input id="id_avatar" name="avatar" type="file">
+
+            {% if user.profile.avatar %}
+                <input id="avatar-clear_id" name="avatar-clear" type="checkbox"> Clear
+            {% endif %}
+            <br>
+            <input type="submit" class="button-primary" value="Change">
         </form>
+
     </div>
 
 
@@ -58,13 +72,13 @@
 
 {% block css %}
     {% load static from staticfiles %}
-    <link rel="stylesheet" href="{% static 'jcrop/css/jquery.Jcrop.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/jquery.Jcrop.css' %}" type="text/css" />
 {% endblock %}
 
 {% block javascript %}
     {% load static from staticfiles %}
     <!--<script src="js/jquery.min.js"></script>-->
-    <script src="{% static 'jcrop/js/jquery.Jcrop.min.js' %}"></script>
+    <script src="{% static 'js/jquery.Jcrop.min.js' %}"></script>
     <script language="Javascript">
         function showCoords(c)
         {

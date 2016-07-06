@@ -2104,3 +2104,16 @@ input[type="email"].circle--input--h6, input[type="number"].circle--input--h6, i
 .logo:hover {
   box-shadow: 0 0 0 15px #fff inset;
 }
+
+#editor-outer
+{
+    width:100%;
+    display: table;
+    margin-top: 3%;
+}
+
+.editor-inner
+{
+  display: table-cell;
+  float: left;
+}

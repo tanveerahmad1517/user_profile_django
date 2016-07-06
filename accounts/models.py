@@ -7,8 +7,9 @@ from uuid import uuid4
 
 def user_directory_path(instance, filename):
     # File will be uploaded to MEDIA_ROOT/<filename>, where filename will be
-    #  given a random value.
+    # given a random value.
     extension = filename.split('.')[-1]
+
     filename = '{}.{}'.format(uuid4().hex, extension)
     return 'images/{}'.format(filename)
 
@@ -20,12 +21,12 @@ class Profile(models.Model):
         null=True,
     )
     bio = models.TextField(blank=False, null=False, default="My biography.")
-    avatar = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    avatar = models.ImageField(upload_to='images/', blank=True, null=True)
 
 
 class Avatar(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
 
 
 def create_profile(sender, **kwargs):
