@@ -1,11 +1,11 @@
 import re
 
-from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 
 class UpperLowerCaseValidator(object):
+    """Checks that password contains both upper and lower case letters."""
     def validate(self, password, user=None):
         if not re.search(r'[a-z]+', password) or (
                 not re.search(r'[A-Z]+', password)):
@@ -21,6 +21,7 @@ class UpperLowerCaseValidator(object):
 
 
 class ContainsNumberValidator(object):
+    """Checks that password contains at least one number."""
     def validate(self, password, user=None):
         if not re.search(r'[0-9]+', password):
             raise ValidationError(
@@ -34,6 +35,7 @@ class ContainsNumberValidator(object):
 
 
 class ContainsSpecialCharactersValidator(object):
+    """Checks that password contains at least one special character."""
     def validate(self, password, user=None):
         if not re.search(r'[0-9]+', password):
             raise ValidationError(

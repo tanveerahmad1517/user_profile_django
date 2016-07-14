@@ -1047,7 +1047,7 @@ select {
   height: 50px;
   padding: 15px;
   color: #222;
-  font-weight: bold;
+  /*font-weight: bold;*/
   -webkit-appearance: menulist;
   -moz-appearance: menulist;
   appearance: menulist;
@@ -1586,6 +1586,10 @@ li:only-child .circle--clone--remove {
   padding: 25px 0;
 }
 
+.circle--table a {
+  text-decoration: none;
+}
+
 /* line 17, ../sass/circle/components/tables.sass */
 .clickable-row td {
   cursor: pointer;
@@ -2116,4 +2120,9 @@ input[type="email"].circle--input--h6, input[type="number"].circle--input--h6, i
 {
   display: table-cell;
   float: left;
+}
+
+.button-editor
+{
+  text-decoration: none;
 }

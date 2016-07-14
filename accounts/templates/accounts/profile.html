@@ -16,12 +16,26 @@
                 </div>
             {% endif %}
             <table class="circle--table">
-            <tr><td>First Name</td><td>{{ user.first_name }}</td></tr>
-            <tr><td>Last Name</td><td>{{ user.last_name }}</td></tr>
-            <tr><td>Email</td><td>{{ user.email }}</td></tr>
-            <tr><td>Date of Birth</td><td>{{ user.profile.date_of_birth }}</td></tr>
-            <tr><td>Bio</td><td>{{ user.profile.bio|safe|linebreaks }}</td></tr>
+                {% for key, value in user_data %}
+                        <tr>
+                            <td>{{ key|title|underscore_to_space }}</td>
+                            <td>
+                            {% if key == "bio" %}
+                                {{ value|safe }}
+                            {% elif key == "country" %}
+                                {{ value.name }}
+                            {% elif key == "website" %}
+                                <a href="{{ value }}" target="_blank">{{ value }}</a>
+                            {% else %}
+                                {{ value }}
+                            {% endif %}
+                            </td>
+                        </tr>
+                {% endfor %}
             </table>
+            {% if not user_data %}
+                <p>Tell us about <a href="{% url 'accounts:edit_profile' %}">yourself</a>!</p>
+            {% endif %}
     </div>
 {% endblock %}
 

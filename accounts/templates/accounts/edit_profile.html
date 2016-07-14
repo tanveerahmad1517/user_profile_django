@@ -13,34 +13,13 @@
             {% csrf_token %}
             {% if user.profile.avatar %}
                 <div class="circle--primary--avatar">
-                    <img src="{{ user.profile.avatar.url }}">
+                    <img src="{{ user.profile.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
                 </div>
             {% endif %}
             {{ form.as_p }}
             {{ formset.management_form }}
-            <!--{{ formset.as_p }}-->
             {% for profile_form in formset %}
-                {% for field in profile_form %}
-                    {% if field.is_hidden %}
-                        {{ field }}
-                    {% else %}
-                        {{ field.errors }}
-                        {% if field.name == "avatar" %}
-                            {% if field.value %}
-                                <img src="{{ field.value.url }}"><br>
-                                <input id="avatar-clear_id" name="profile-0-avatar-clear" type="checkbox">
-                                <label for="avatar-clear_id">Clear</label>
-                            {% endif %}
-                            <br>New Avatar: <input id="id_avatar" name="profile-0-avatar" type="file">
-                        {% elif field.name == "bio" %}
-                            {{ field.label_tag }}
-                            <textarea name="profile-0-bio">{{ field.value }}</textarea>
-                        {% else %}
-                            {{ field.label_tag }}
-                            {{ field }}
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
+                {{ profile_form.as_p }}
             {% endfor %}
             <input type="submit" class="button-primary" value="Save">
         </form>

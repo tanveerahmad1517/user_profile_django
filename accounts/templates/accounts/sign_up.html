@@ -10,20 +10,25 @@
 </form>
 {% endblock %}
 
+{% block css %}
+    {% load static from staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/strength.css' %}" type="text/css" />
+{% endblock %}
+
 
 {% block javascript %}
-{% load static from staticfiles %}
-<script type="text/javascript" src="{% static 'strength/strength.js' %}"></script>
-<script type="text/javascript" src="{% static 'strength/js.js' %}"></script>
-<script>
-$(document).ready(function ($) {
-    $("#id_password1").strength({
-        strengthClass: 'strength',
-        strengthMeterClass: 'strength_meter',
-        strengthButtonClass: 'button_strength',
-        strengthButtonText: 'Show password',
-        strengthButtonTextToggle: 'Hide Password'
-    });
-});
-</script>
+    {% load static from staticfiles %}
+    <script type="text/javascript" src="{% static 'js/strength.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/js.js' %}"></script>
+    <script>
+        $(document).ready(function ($) {
+            $("#id_password1").strength({
+                strengthClass: 'strength',
+                strengthMeterClass: 'strength_meter',
+                strengthButtonClass: 'button_strength',
+                strengthButtonText: 'Show password',
+                strengthButtonTextToggle: 'Hide Password'
+            });
+        });
+    </script>
 {% endblock %}
